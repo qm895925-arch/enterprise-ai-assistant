@@ -1,6 +1,6 @@
 from pathlib import Path
 
-import fitz
+import pymupdf
 
 from app.schemas.parser import ParsedDocument, ParsedPage
 
@@ -37,7 +37,7 @@ class DocumentParser:
         file_path: str,
     ) -> ParsedDocument:
         text = Path(file_path).read_text(
-            encoding="utf-8"
+            encoding="utf-8-sig"
         )
 
         return ParsedDocument(
@@ -59,7 +59,7 @@ class DocumentParser:
     ) -> ParsedDocument:
         pages: list[ParsedPage] = []
 
-        with fitz.open(file_path) as pdf:
+        with pymupdf.open(file_path) as pdf:
             for page_number, page in enumerate(pdf, start=1):
                 text = page.get_text("text")
 
