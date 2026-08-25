@@ -18,3 +18,17 @@ class EmbeddingService:
             raise ValueError("Embedding result is empty")
 
         return embeddings[0].tolist()
+
+    def embed_texts(
+        self,
+        texts: list[str],
+    ) -> list[list[float]]:
+        if not texts:
+            return []
+
+        embeddings = self.model.embed(texts)
+
+        return [
+            embedding.tolist()
+            for embedding in embeddings
+        ]
